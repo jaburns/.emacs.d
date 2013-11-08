@@ -2,12 +2,17 @@
 ;;  emacs init
 ;;
 
-;; Init marmalade package repo
+;; Init package repos
 (require 'package)
-(add-to-list 'package-archives
-    '("marmalade" .
-      "http://marmalade-repo.org/packages/"))
+(setq package-archives
+   '(("gnu" . "http://elpa.gnu.org/packages/")
+     ("marmalade" . "http://marmalade-repo.org/packages/")
+     ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
+
+;; Relative line numbers
+(global-linum-mode 1)
+(require 'linum-relative)
 
 ;; hhhehehe
 (evil-mode 1)
