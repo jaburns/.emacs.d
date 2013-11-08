@@ -1,11 +1,15 @@
 ;;
-;;  emacs init 
+;;  emacs init
 ;;
 
+;(require 'key-chord)
 (require 'package)
+;(require 'evil)
+
 (add-to-list 'package-archives
     '("marmalade" .
       "http://marmalade-repo.org/packages/"))
+
 (package-initialize)
 
 ;; hhhehehe
@@ -26,25 +30,13 @@
 
 ;; Open an empty buffer instead of the welcome to emacs page
 (setq inhibit-startup-message t)
-(insert " ") 
+(insert " ")
 
-;; Perhaps use KeyChord library for this
-;;   http://stackoverflow.com/questions/10569165/how-to-map-jj-to-esc-in-emacs-evil-mode
+;;   http://bbbscarter.wordpress.com/2012/09/13/emacs-bits-and-bobs/
 ;;
-;; map jk to exit insert mode
-(define-key evil-insert-state-map "j" #'cofi/maybe-exit)
-(evil-define-command cofi/maybe-exit ()
-  :repeat change
-  (interactive)
-  (let ((modified (buffer-modified-p)))
-    (insert "j")
-    (let ((evt (read-event (format "Insert %c to exit insert state" ?k)
-               nil 0.2)))
-      (cond
-       ((null evt) (message ""))
-       ((and (integerp evt) (char-equal evt ?k))
-    (delete-char -1)
-    (set-buffer-modified-p modified)
-    (push 'escape unread-command-events))
-       (t (setq unread-command-events (append unread-command-events
-                          (list evt))))))))
+;; Map jk to exit insert mode (broken)
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
+(key-chord-define evil-replace-state-map "jk" 'evil-normal-state)
+(key-chord-define evil-visual-state-map  "jk" 'evil-normal-state)
+(key-chord-mode 1)
